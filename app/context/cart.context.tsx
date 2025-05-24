@@ -93,6 +93,10 @@ const cartReducer = (state: CartState, action: Action): CartState => {
             break;
         }
 
+        case 'CLEAR_CART': {
+            return { items: {}, total: 0 }
+        }
+
         case 'SET_CART': {
             return action.payload;
         }
@@ -173,7 +177,7 @@ const cartReducer = (state: CartState, action: Action): CartState => {
 
     const newState = {
         items: updatedCart.items,
-        total,
+        total: Number(total.toFixed(2)),
         discount: {
             discountAmount: updatedCart.discount.discountAmount || 0,
             isApplied: updatedCart.discount.isApplied || false,
