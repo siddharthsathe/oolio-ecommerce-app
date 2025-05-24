@@ -1,0 +1,14 @@
+.product-grid {
+    flex: 1;
+}
+
+.product-grid h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+}

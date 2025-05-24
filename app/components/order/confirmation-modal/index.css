@@ -1,0 +1,176 @@
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.confirmation-modal {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 32px;
+    width: 400px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.check-icon {
+    border: 2px solid green;
+    color: green;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.modal-header p {
+    margin: 0;
+    color: #555;
+    font-size: 14px;
+}
+
+.order-details {
+    background-color: #fdf7f2;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.item.total {
+    font-weight: bold;
+    margin-top: 12px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+}
+
+.meta {
+    font-size: 13px;
+    color: #888;
+    margin-left: 4px;
+}
+
+.new-order-btn {
+    width: 100%;
+    background: #c03e14;
+    color: white;
+    padding: 12px;
+    border-radius: 24px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    /* increased from 16px to 20px */
+    margin-bottom: 24px;
+    margin-top: 8px;
+    /* added spacing from top */
+}
+
+.check-icon {
+    border: 2px solid #22c55e;
+    /* green-500 */
+    color: #22c55e;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.confirmation-text h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2d1f18;
+}
+
+.confirmation-text p {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    color: #a39b96;
+}
+
+.order-details {
+    background-color: #fdf7f2;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+/* Updated item row layout with image */
+.item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    /* spacing between image, info and price */
+    margin-bottom: 16px;
+    /* slightly more vertical spacing */
+    font-size: 15px;
+}
+
+.item-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.item-info {
+    flex-grow: 1;
+    /* takes available horizontal space */
+}
+
+.item-price {
+    min-width: 60px;
+    text-align: right;
+    font-weight: 600;
+}
+
+.item.total {
+    font-weight: bold;
+    margin-top: 12px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.meta {
+    font-size: 13px;
+    color: #888;
+    margin-left: 4px;
+}
