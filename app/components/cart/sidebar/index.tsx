@@ -1,6 +1,6 @@
 'use client';
 
-import { TreePine } from 'lucide-react';
+import { TreePine, LoaderCircle } from 'lucide-react';
 import { useCart, useCartDispatch } from '@/app/context/cart.context';
 import { EmptyCart } from '@/app/components/cart/empty-cart';
 import { useState } from 'react';
@@ -13,6 +13,8 @@ import './index.css';
 import { callExternalApi } from '@/app/actions';
 
 export const CartSidebar = () => {
+    // create order API status indicator 
+    const [isCreatingOrder, setIsCreatingOrder] = useState<boolean>(false);
     const { products, isLoading } = useProduct();
     const [showModal, setShowModal] = useState(false);
     const { items, total, discount } = useCart();
@@ -66,13 +68,21 @@ export const CartSidebar = () => {
     );
 
     const confirmOrderHandler = async () => {
+        setIsCreatingOrder(true);
         const data = await callExternalApi('api/order', "post", {
             ...(discount?.couponCode ? { couponCode: discount?.couponCode } : {}),
             items: Object.values(items).map(item => ({ productId: item.id, quantity: item.quantity }))
         });
 
-        console.info('data--->', data);
-        setShowModal(true);
+        if (data.items) {
+            setIsCreatingOrder(false)
+            setShowModal(true);
+            dispatch({
+                type: "CLEAR_CART",
+            })
+        } else {
+            console.info('Failed to create order!');
+        }
     }
 
     return (
@@ -115,7 +125,7 @@ export const CartSidebar = () => {
                             <div className="order-total-wrapper">
                                 <div className="order-total">
                                     <span className="total-label">Order Total</span>
-                                    <span className="total-amount">${total}</span>
+                                    <span className="total-amount">${total.toFixed(2)}</span>
                                 </div>
                             </div>
 
@@ -126,7 +136,12 @@ export const CartSidebar = () => {
                                 </span>
                             </div>
 
-                            <button className="confirm-btn" onClick={() => confirmOrderHandler()}> Confirm Order</button>
+                            <button disabled={isCreatingOrder} className="confirm-btn" onClick={() => confirmOrderHandler()}>
+                                {isCreatingOrder ? <div className='creating-order'>
+                                    Confirming..
+                                    <LoaderCircle className="spinner-icon" />
+                                </div> : "Confirm Order"}
+                            </button>
                         </div>
                     ) : <EmptyCart />}
                     {showModal && <OrderConfirmationModal onClose={() => setShowModal(false)} />}
