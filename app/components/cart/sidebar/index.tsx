@@ -1,7 +1,7 @@
 'use client';
 
 import { TreePine, LoaderCircle } from 'lucide-react';
-import { useCart, useCartDispatch } from '@/app/context/cart.context';
+import { CartItem, useCart, useCartDispatch } from '@/app/context/cart.context';
 import { EmptyCart } from '@/app/components/cart/empty-cart';
 import { useState } from 'react';
 import { OrderConfirmationModal } from '@/app/components/order/confirmation-modal';
@@ -11,10 +11,13 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import './index.css';
 import { callExternalApi } from '@/app/actions';
+import { OrderDetailsType } from '../../order/confirmation-modal/types';
 
 export const CartSidebar = () => {
     // create order API status indicator 
     const [isCreatingOrder, setIsCreatingOrder] = useState<boolean>(false);
+    const [orderDetails, setOrderDetails] = useState<OrderDetailsType>({ items: [], products: [], total: 0 })
+
     const { products, isLoading } = useProduct();
     const [showModal, setShowModal] = useState(false);
     const { items, total, discount } = useCart();
@@ -80,6 +83,14 @@ export const CartSidebar = () => {
             dispatch({
                 type: "CLEAR_CART",
             })
+            setOrderDetails(() => ({
+                items: data.items,
+                products: data.products,
+                couponCode: discount?.couponCode || '',
+                discountAmount: discount?.discountAmount || 0,
+                orderedItems: items,
+                total
+            }))
         } else {
             console.info('Failed to create order!');
         }
@@ -144,7 +155,8 @@ export const CartSidebar = () => {
                             </button>
                         </div>
                     ) : <EmptyCart />}
-                    {showModal && <OrderConfirmationModal onClose={() => setShowModal(false)} />}
+
+                    {showModal && <OrderConfirmationModal orderDetails={orderDetails} onClose={() => setShowModal(false)} />}
                 </>
             )}
         </div>

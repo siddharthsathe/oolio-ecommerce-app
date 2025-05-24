@@ -95,7 +95,7 @@ export const CouponCode = () => {
                 </div>
             )
         }
-    }, [couponCodeInput])
+    }, [couponCodeInput, discount?.isValid, discount?.couponCode])
 
     return renderContent();
 }

@@ -2,8 +2,15 @@
 
 import React from 'react';
 import './index.css';
+import { OrderDetailsType } from './types';
 
-export function OrderConfirmationModal({ onClose }: { onClose: () => void }) {
+interface IOrderConfirmationModalProps {
+    onClose: () => void;
+    orderDetails: OrderDetailsType;
+}
+
+export function OrderConfirmationModal({ orderDetails, onClose, }: IOrderConfirmationModalProps) {
+    console.info('----orderDetails--', orderDetails);
     return (
         <div className="modal-backdrop">
             <div className="confirmation-modal">
@@ -18,30 +25,22 @@ export function OrderConfirmationModal({ onClose }: { onClose: () => void }) {
                 </div>
 
                 <div className="order-details">
-                    <div className="item">
-                        <img src="/images/tiramisu.jpg" alt="Classic Tiramisu" className="item-image" />
-                        <div className="item-info">
-                            <div>Classic Tiramisu <span className="meta">1x @$5.50</span></div>
-                        </div>
-                        <div className="item-price">$5.50</div>
-                    </div>
-                    <div className="item">
-                        <img src="/images/creme-brulee.jpg" alt="Vanilla Bean Creme Brulee" className="item-image" />
-                        <div className="item-info">
-                            <div>Vanilla Bean Creme Brulee <span className="meta">4x @$7.00</span></div>
-                        </div>
-                        <div className="item-price">$28.00</div>
-                    </div>
-                    <div className="item">
-                        <img src="/images/panna-cotta.jpg" alt="Vanilla Panna Cotta" className="item-image" />
-                        <div className="item-info">
-                            <div>Vanilla Panna Cotta <span className="meta">2x @$6.50</span></div>
-                        </div>
-                        <div className="item-price">$13.00</div>
-                    </div>
+                    {orderDetails.products.map(product => {
+                        const orderedItem = orderDetails?.orderedItems?.[product.id]
+                        return (
+                            <div className="item">
+                                <img src={product.image?.thumbnail} alt="Classic Tiramisu" className="item-image" />
+                                <div className="item-info">
+                                    <div>{product.name} <span className="meta">{orderedItem?.quantity}x @{orderedItem?.finalPrice}</span></div>
+                                </div>
+                                <div className="item-price">${(orderedItem?.quantity || 1) * (orderedItem?.finalPrice || 0)}</div>
+                            </div>
+                        )
+                    })}
+
                     <div className="item total">
                         <div>Order Total</div>
-                        <div>$46.50</div>
+                        <div>${orderDetails.total.toFixed(2)}</div>
                     </div>
                 </div>
 

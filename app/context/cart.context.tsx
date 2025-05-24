@@ -94,7 +94,12 @@ const cartReducer = (state: CartState, action: Action): CartState => {
         }
 
         case 'CLEAR_CART': {
-            return { items: {}, total: 0 }
+            updatedCart = {
+                ...updatedCart,
+                items: {},
+                discount: {}
+            }
+            break;
         }
 
         case 'SET_CART': {
